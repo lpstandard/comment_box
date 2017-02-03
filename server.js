@@ -63,10 +63,10 @@ router.route('/comments')
   //The put method gives us the chance to update our comment based on 
   //the ID passed to the route
   .put((req, res) => {
-    Comment.findById(req.params.comment_id, (err, comment) =>{
+    Comment.findById(req.params.comment_id, (err, comment) => {
       if(err) res.send(err);
-      //The put method gives us the chance to update our comment based on 
-      //the ID passed to the route
+      //Setting the new author and text to whatever was changed. If 
+      //nothing was changed we will not alter  the field. 
       (req.body.author) ? comment.author = req.body.author : null;
       (req.body.text) ? comment.text = req.body.text : null;
       //save comment

@@ -7,12 +7,12 @@ class CommentList extends Component {
   let commentNodes = this.props.data.map(comment => {
   return (
      <Comment 
-      author={ comment.author }
+      author={ comment.author || 'unknown'}
       uniqueID={comment['_id']}
       onCommentDelete={this.props.onCommentDelete}
-      onCommentUpdate={this.props.onCommentDelete}
+      onCommentUpdate={this.props.onCommentUpdate}
       key={ comment['_id'] }>
-      { comment.text}
+      { comment.text || 'empty'}
      </Comment>
   )
  })

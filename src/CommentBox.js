@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import axios from "axios";
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
-import axios from "axios";
 import style from './style';
 
 class CommentBox extends Component {
@@ -12,6 +12,8 @@ class CommentBox extends Component {
     };
     this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
     this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+    this.handleCommentDelete = this.handleCommentDelete.bind(this);
+    this.handleCommentUpdate = this.handleCommentUpdate.bind(this);
   }
 
   loadCommentsFromServer(){
@@ -33,6 +35,23 @@ class CommentBox extends Component {
       })
   }
 
+  handleCommentDelete(id){
+    axios.delete(`{this.props.url/${id}}`)
+      .then(res => {
+        console.log('Comment deleted!');
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  };
+
+  handleCommentUpdate(id, comment){
+    axios.put(`{this.props.url}/${id}`, comment)
+      .catch(err => {
+        console.log('this is the error!' ,err);
+      })
+  };
+
   componentDidMount() {
     this.loadCommentsFromServer();
     setInterval(this.loadCommentsFromServer, this.props.pollInterval);
@@ -42,7 +61,11 @@ class CommentBox extends Component {
     return (
       <div style={style.commentBox}>
         <h2 style={style.title}>Comments:</h2>
-        <CommentList data={this.state.data}/>
+        <CommentList
+          onCommentDelete={this.handleCommentDelete}
+          onCommentUpdate={this.handleCommentUpdate}
+          data={this.state.data}
+        />
         <CommentForm onCommentSubmit={this.handleCommentSubmit}/>
       </div>
     )

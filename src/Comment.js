@@ -56,7 +56,6 @@ class Comment extends Component {
   }
 
  rawMarkup() {
-  console.log(this.props.children)
    let rawMarkup = marked(this.props.children.toString());
    return { __html: rawMarkup };
  }
@@ -73,15 +72,16 @@ class Comment extends Component {
        placeholder="Update name…"
        style={ style.commentFormAuthor }
        value={ this.state.author }
-       onChange= { this.handleAuthorChange } 
+       onChange={ this.handleAuthorChange } 
      />
      <input
         type="text"
         placeholder="Update your comment…"
-        style= { style.commentFormText }
+        style={ style.commentFormText }
         value={ this.state.text }
-        onChange={ this.handleTextChange } />
-        <input
+        onChange={ this.handleTextChange } 
+      />
+      <input
         type="submit"
         style={ style.commentFormPost }
         value="Update" 
